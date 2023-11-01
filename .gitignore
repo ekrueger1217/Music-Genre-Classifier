@@ -10,7 +10,7 @@ __pycache__/
 *.so
 
 # files to ignore 
-
+*.json
 *.csv 
 *.gz
 *.db
