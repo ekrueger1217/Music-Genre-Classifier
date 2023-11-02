@@ -1,5 +1,9 @@
 #audio files
 audio/
+data/
+spectrograms-128/
+spectrograms-256/
+spectrograms-512/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
