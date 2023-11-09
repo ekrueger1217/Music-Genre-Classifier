@@ -42,7 +42,7 @@ For every model except the logitistic regression, the train score is far higher 
 
 The XGBoost Classifier performed best on validation despite overfitting likely occuring. When evaluated on unseen test data, the model produces an accuracy score of 65%.
 
-![graph2](./visualizations/xg_boost_confmatrix_test.png)
+![graph2](./visualizations/xgboost_confmatrix_test.png)
 
 ## Recommendations and Next Steps
 I recommend using model to classify various sounds. For example, one could feed this model a set of podcasts and songs from a given streaming platform and have the dataset split into two separate playlists. 
