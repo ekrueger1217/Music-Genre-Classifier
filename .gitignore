@@ -4,6 +4,7 @@ data/
 spectrograms-128/
 spectrograms-256/
 spectrograms-512/
+specs_sounds_128/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
