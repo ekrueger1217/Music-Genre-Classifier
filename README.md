@@ -52,6 +52,6 @@ Given the likelihood of overfitting in most models, this is just a starting poin
 
 
 ## Additional Materials
-Please review my full analysis in this [Jupyter Notebook](./Sound_Classifier_Models_2.ipynb) and my presentation [here](./Sound_Classification_Presentation.pdf) . 
+Please review my full analysis in this [Jupyter Notebook](./Sound_Classifier_Models.ipynb) and my presentation [here](./Sound_Classification_Presentation.pdf) . 
 
 
