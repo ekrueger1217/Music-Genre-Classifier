@@ -1,8 +1,8 @@
 # Sound-Classification
 
 ## Business Overview
-The goal of this project is to build a model that accurately classifies various sounds. The classes included are i) Speech ii) Music iii) Animal iv) Vehicle V) Natural Sounds. I went about this in two ways, 1. Using spectrogram images to train a convolutional neural network. 2. extracting numerical features, such as tempo, Mel-frequency cepstral coefficients (MFCCs), chroma features, and spectral features, from the audio files and trained various classification models.
-The following models were explore:
+The goal of this project is to build a model that accurately classifies various sounds. The classes included are i) Speech ii) Music iii) Animal and iv) Vehicle. I went about this in two ways, 1. Using spectrogram images to train a convolutional neural network. 2. extracting numerical features, such as tempo, Mel-frequency cepstral coefficients (MFCCs), chroma features, and spectral features, from the audio files and training various classification models.
+The following models were explored:
 1. Convolutional Neural Network (CNN)
 2. Random Forest
 3. Logisitic Regression
@@ -25,11 +25,10 @@ To further explore how Mel Spectrograms for all audio files in the dataset were 
 Additionally, numerical features were extracted from the audio files saved as a csv file for future use. To further explore how audio features were extracted for a audio files in the dataset please refer to this [Jupyter Notebook](./Feature_Extraction)
 
 Also, the dataset is fairly balanced:
-* Speech: 21%
-* Music: 21%
-* Animal: 21%
-* Vehicle: 20%
-* Natural Sounds: 16%
+* Speech: 27%
+* Music: 26%
+* Animal: 22%
+* Vehicle: 25%
 
 ## Modeling
 As stated above I approached this classification problem in two ways: i) A CNN model trained on spectrogram images and ii) various classification models trained on numerical features extracted from audio files. Hyperparameter tuning using GridSearchCV was performed on the random forest, logistic regression, AdaBoost classifier, and XGBoost models, and various parameters, such as kernal initializer and regularization factor, were flexed in tuning the CNN model.
@@ -38,9 +37,9 @@ Below is a comparison of train and validation scores:
 
 ![graph1](./visualizations/model_comparison.png)
 
-For every model except the logitistic regression, the train score is far higher than the validation score, suggesting, despite hyperparameter tuning, the models are overfitting. This should be addressed as a next step. 
+For every model except the logitistic regression, the train score is significantly higher than the validation score, suggesting, despite hyperparameter tuning, the models are overfitting. This should be addressed as a next step. 
 
-The XGBoost Classifier performed best on validation despite overfitting likely occuring. When evaluated on unseen test data, the model produces an accuracy score of 65%.
+The XGBoost Classifier performed best on validation despite overfitting likely occuring. When evaluated on unseen test data, the model produces an accuracy score of 74%.
 
 ![graph2](./visualizations/xgboost_confmatrix_test.png)
 
@@ -53,6 +52,6 @@ Given the current poor accuracy scores across the board and the likelihood of ov
 3. Add additional sound classes to increase number of use cases
 
 ## Additional Materials
-Please review my full analysis in this [Jupyter Notebook](./Sound_Classifier_Models.ipynb) 
+Please review my full analysis in this [Jupyter Notebook](./Sound_Classifier_Models_2.ipynb) 
 
 
