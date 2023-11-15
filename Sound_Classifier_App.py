@@ -21,7 +21,7 @@ import io
 
 
 #load model. This model was built and trained in the 'Sound_Classifier_Models' notebook
-model = load_model('/Users/emilykrueger/Documents/FlatironMaterials/Sound-Classifier-Project/model/sound_classifier.h5')
+model = load_model('model/sound_classifier.h5')
 
 
 # In[247]:
