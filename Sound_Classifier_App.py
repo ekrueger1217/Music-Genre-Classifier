@@ -115,12 +115,10 @@ def main():
     st.title("Sound Classification App")
     st.markdown("## What's making that sound?")
 
-    # Allow user to upload multiple files
     uploaded_files = st.file_uploader("Upload Audio Files Here:", type=["wav", "mp3", "ogg", "flac"], accept_multiple_files=True)
-
-
-    # Classify the uploaded files
-    classify_files(uploaded_files)
+    
+    if uploaded_files:
+        classify_files(uploaded_files)
  
 
 if __name__ == "__main__":
