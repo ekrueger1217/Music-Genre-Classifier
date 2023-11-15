@@ -21,8 +21,9 @@ import io
 
 
 #load model. This model was built and trained in the 'Sound_Classifier_Models' notebook
+print('loading the model...')
 model = load_model('model/sound_classifier.h5')
-
+print('model loaded successfully')
 
 # In[247]:
 
@@ -36,7 +37,7 @@ class_mapping = {0: 'Speech', 1: 'Animal', 2: 'Vehicle', 3: 'Music'}
 
 #Create function that classifies a random ten second clip from a single audio file
 def classify_sound(audio_file_path):
-    
+    print('classifying sounds...')
     # Load the audio file
     y, sr = librosa.load(audio_file_path, sr=22050)
     
@@ -75,12 +76,14 @@ def classify_sound(audio_file_path):
     pred_class = np.argmax(preds)
     pred_label = class_mapping.get(pred_class, 'Unkown')
 
+    print(f"Prediction for {audio_file_path}: {pred_label}")
     return pred_label
 
 
 # In[249]:
 #loop through multiple audio files in a folder
 def classify_folder(folder_path):
+    st.write('classifying folder...')
     class_counts = {'Speech': 0, 'Animal': 0, 'Vehicle': 0, 'Music': 0}
     results = []
     
@@ -104,11 +107,14 @@ def classify_folder(folder_path):
 
     st.table(class_distribution_data)
 
+    st.write(audio_file_path)
+    st.write('Results')
     return results
 
 
 # In[250]:
 def main():
+    st.write('running main function')
     st.title("Sound Classification App")
     st.markdown("## What's making that sound?")
 
@@ -117,6 +123,7 @@ def main():
 
     if folder_path and os.path.exists(folder_path):
         # Classify audio files in the specified folder
+        st.write('classifying audio...')
         results = classify_folder(folder_path)
 
         # Display results in a table
