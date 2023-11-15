@@ -98,6 +98,15 @@ def classify_files(files):
         class_distribution_data["Percentage"].append(f"{percentage:.2f}%")
 
     st.table(class_distribution_data)
+
+    st.markdown("### Classification Results:")
+    classification_results_data = {"File": [], "Class": []}
+    for audio_file, pred_label in results:
+        classification_results_data["File"].append(audio_file)
+        classification_results_data["Class"].append(pred_label)
+
+    st.table(classification_results_data)
+    
     return results
 
 
@@ -111,16 +120,8 @@ def main():
 
 
     # Classify the uploaded files
-    results = classify_files(uploaded_files)
-
-    # Display results in a table
-    st.markdown("### Classification Results:")
-    classification_results_data = {"File": [], "Class": []}
-    for audio_file, pred_label in results:
-        classification_results_data["File"].append(audio_file)
-        classification_results_data["Class"].append(pred_label)
-
-    st.table(classification_results_data)
+    classify_files(uploaded_files)
+ 
 
 if __name__ == "__main__":
     main()
