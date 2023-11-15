@@ -5,21 +5,21 @@ The goal of this project is to build a model that accurately classifies various 
 1. Speech
 2. Music
 3. Animal
-4. Vehicle. 
+4. Vehicle 
 
-I went about this in two ways, 1. Extracting numerical features, such as tempo, Mel-frequency cepstral coefficients (MFCCs), chroma features, and spectral features, from the audio files and building several traditional machine learning models, and 2. Creating and using spectrogram images to build a convolutional neural network.
+I went about this in two ways, 1. Extracting numerical features, such as tempo, Mel-frequency cepstral coefficients (MFCCs), chroma features, and spectral features, from the audio files and building several traditional machine learning models, and 2. Creating and using Mel Spectrograms to build a convolutional neural network.
 
-I evaluated model performance based on accuracy, as our dataset is fairly balanced and, in this context, I am not particularly concerned with either false positives or false negatives. 
+I evaluated model performance based on accuracy, as the dataset is fairly balanced and, in this context, I am not particularly concerned with either false positives or false negatives. 
 
 ## Data Overview & Understanding
 For this project, I used [AudioSet](https://research.google.com/audioset/), a publicly available dataset of approximately 2.1 million human annotated, ten second YouTube clips. The dataset can be downloaded as a csv file that includes YouTube URL/ID's, specific ten second time ranges from which audio can be extracted, and class labels. For nearly every row, multiple labels are listed, with anything as broad as "Music" or as granular as "Plucked string instrument". I selected a subset of the larger dataset, focusing specifically on the four relatively broad classes listed above. To further explore how audio was extracted from the YouTube videos and downloaded to my machine please refer to this [Jupyter Notebook](./Audio_Pull.ipynb). 
 
-Numerical features were extracted from audio files using Librosa. In total I extracted 64 features, including rhythmic features, chroma features, and spectral features. For reference, chromas represent the energy distribution of pitch classes, while spectral content refers to the distribution of energy across different frequencies. To further explore how audio features were extracted for the audio files in the dataset please refer to this [Jupyter Notebook](./Feature_Extraction)
+Numerical features were extracted from audio files using Librosa. In total I extracted 64 features, including rhythmic features, chroma features, and spectral features. For reference, chromas represent the energy distribution of pitch classes, while spectral content refers to the distribution of energy across different frequencies. To further explore how audio features were extracted from the audio files in the dataset please refer to this [Jupyter Notebook](./Feature_Extraction.ipynb)
 
 An additional aspect of compiling the dataset was then creating Mel Spectrograms. A Mel Spectrogram is a visual representation of audio with time on the x-axis, frequency on the y-axis, and color representing amplitude. In creating Mel Spectrograms, the linear frequency scale of the original signal is converted to the Mel Scale, a logarithmic scale that better reflects the way in which humans perceive pitch. The Mel Scale was created by Harvey Fletcher, an American psychologist who conducted psychoacoustic experiments on the perception of pitch and frequency in the early 20th century.
 
 See below an example of a Mel Spectrogram of a ten second clip from an electronic dance music(EDM) song:
-![image1](./spectrograms/sample_spec_ax.png)
+![image1](./spectrogram/sample_spec_ax.png)
 
 To further explore how Mel Spectrograms for the audio files in the dataset were created please refer to this [Jupyter Notebook](./Spectrogram_Build.ipynb)
 
@@ -29,7 +29,7 @@ Also of note, the dataset is fairly balanced across classes:
 * Animal: 22%
 * Vehicle: 26%
 
-Both the image dataset and features dataset were split into train and test sets prior to preprocessing and model building.
+Both the spectrograms dataset and features dataset were split into train and test sets prior to preprocessing and model building.
 
 ## Modeling
 
@@ -47,18 +47,18 @@ Below are the top ten features by importance per the XGBoost classifier, the bes
 ![chart5](./visualizations/feature_importance.png)
 
 ### Convolutional Neural Network (CNN)
-In addition to the machine learning models discussed above, I built a CNN for image classification and trained the model on the spectrograms created from the audio files in the dataset. The structure of the CNN is shown here:
+In addition to the machine learning models discussed above, I built a CNN for image classification and trained the model on the spectrogram images created from the audio files in the dataset. The structure of the CNN is shown here:
 ![chart2](./visualizations/cnn_summary.png)
 
 See below train and validation accuracy scores. EarlyStopping was defined with validation accuracy monitored, patience set to five epochs, and best weights restored.
-![chart3](.visualizations/cnn_acc_hist.png)
+![chart3](./visualizations/cnn_acc_hist.png)
 
 ### Model Evaluation
 Per the below comparison, the CNN is the best performing model.
-![chart4](.visualizations/model_comparison.png)
+![chart4](./visualizations/model_comparison.png)
 
-When tested on unseen data, the CNN produces an accuracy score of 75%.
-![chart6](.visualizations/finalmod_confmatrix_test.png)
+When tested on unseen data, the CNN produces an **accuracy score of 75%**.
+![chart6](./visualizations/finalmod_confmatrix_test.png)
 
 ## Recommendations and Next Steps
 I recommend using this model to classify various sounds. For example, one could feed this model a set of audio files from a streaming platform in order to segment out songs and podcasts and discard audio that is not a song or podcast, such as animal and vehicle sounds. One could also use this model as a starting point to develop a virtual assistant that can both recognize and interpret speech and music, provide song information, or respond to speech requests.
@@ -70,6 +70,6 @@ Some potential next steps include:
 ## Additional Materials
 An application that leverages my final CNN model can be found [here](https://sound-classifier-app.streamlit.app/). Give it a try on your own audio files!
 
-Please also see my full analysis in this [Jupyter Notebook](./Sound_Classifier_Models.ipynb) in addition to the supporting notebooks discussed above, and a copy of my presentation can be found [here](./Sound_Classification_Presentation.pdf) . 
+Please also review my full analysis in this [Jupyter Notebook](./Sound_Classifier_Models.ipynb), in addition to the supporting notebooks discussed above, and my presentation [here](./Sound_Classification_Presentation.pdf) . 
 
 
