@@ -21,9 +21,7 @@ import io
 
 
 #load model. This model was built and trained in the 'Sound_Classifier_Models' notebook
-print('loading the model...')
 model = load_model('model/sound_classifier.h5')
-print('model loaded successfully')
 
 # In[247]:
 
@@ -37,7 +35,6 @@ class_mapping = {0: 'Speech', 1: 'Animal', 2: 'Vehicle', 3: 'Music'}
 
 #Create function that classifies a random ten second clip from a single audio file
 def classify_sound(audio_file_path):
-    print('classifying sounds...')
     # Load the audio file
     y, sr = librosa.load(audio_file_path, sr=22050)
     
@@ -76,27 +73,22 @@ def classify_sound(audio_file_path):
     pred_class = np.argmax(preds)
     pred_label = class_mapping.get(pred_class, 'Unkown')
 
-    print(f"Prediction for {audio_file_path}: {pred_label}")
     return pred_label
 
 
 # In[249]:
 #loop through multiple audio files in a folder
-def classify_folder(folder_path):
-    st.write('classifying folder...')
+def classify_files(files):
     class_counts = {'Speech': 0, 'Animal': 0, 'Vehicle': 0, 'Music': 0}
     results = []
     
-    for root, dirs, files in os.walk(folder_path):
-        for file in files:
-            audio_file_path = os.path.join(root, file)
-            if any(file.lower().endswith(ext) for ext in ['.wav', '.mp3', '.ogg', '.flac']):
-                pred_label = classify_sound(audio_file_path)
-                results.append((file, pred_label))
-                class_counts[pred_label] += 1
+    for file in files:
+        pred_label = classify_sound(file)
+        results.append((file.name, pred_label))
+        class_counts[pred_label] += 1
 
     total_files = len(results)
-
+    
     st.header("Results:")
     st.markdown("### Class Distribution:")
     class_distribution_data = {"Class": [], "Percentage": []}
@@ -106,34 +98,29 @@ def classify_folder(folder_path):
         class_distribution_data["Percentage"].append(f"{percentage:.2f}%")
 
     st.table(class_distribution_data)
-
-    st.write(audio_file_path)
-    st.write('Results')
     return results
 
 
 # In[250]:
 def main():
-    st.write('running main function')
     st.title("Sound Classification App")
     st.markdown("## What's making that sound?")
 
-    # Allow user to input the folder path
-    folder_path = st.text_input("Enter the filepath where your audio files are saved:")
+    # Allow user to upload multiple files
+    uploaded_files = st.file_uploader("Upload Audio Files Here:", type=["wav", "mp3", "ogg", "flac"], accept_multiple_files=True)
 
-    if folder_path and os.path.exists(folder_path):
-        # Classify audio files in the specified folder
-        st.write('classifying audio...')
-        results = classify_folder(folder_path)
 
-        # Display results in a table
-        st.markdown("### Classification Results:")
-        classification_results_data = {"File": [], "Class": []}
-        for audio_file, pred_label in results:
-            classification_results_data["File"].append(audio_file)
-            classification_results_data["Class"].append(pred_label)
+    # Classify the uploaded files
+    results = classify_files(uploaded_files)
 
-        st.table(classification_results_data)
+    # Display results in a table
+    st.markdown("### Classification Results:")
+    classification_results_data = {"File": [], "Class": []}
+    for audio_file, pred_label in results:
+        classification_results_data["File"].append(audio_file)
+        classification_results_data["Class"].append(pred_label)
+
+    st.table(classification_results_data)
 
 if __name__ == "__main__":
     main()
